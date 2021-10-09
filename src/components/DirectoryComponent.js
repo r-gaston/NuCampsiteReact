@@ -14,10 +14,10 @@ class Directory extends Component {
     }
 
     renderSelectedCampsite(campsite) {
-        if(campsite) {
+        if (campsite) {
             return (
                 <Card>
-                    <CardImg top scr={campsite.name} alt={campsite.name} />
+                    <CardImg top src={campsite.image} alt={campsite.name} />
                     <CardBody>
                         <CardTitle>{campsite.name}</CardTitle>
                         <CardText>{campsite.description}</CardText>
@@ -29,20 +29,28 @@ class Directory extends Component {
     }
 
     render() {
-        const directory = this.props.campsites.map(campsites => {
-        return (
-            <div key={campsites.id} className="col">
-                <img src={campsites.image} alt={campsites.name} />
-                <h2>{campsites.name}</h2>
-                <p>{campsites.description}</p>
-            </div>               
-        );
-    });
+        const directory = this.props.campsites.map(campsite => {
+            return (
+                <div key={campsite.id} className="col-md-5 m-1">
+                    <Card onClick={() => this.onCampsiteSelect(campsite)}>
+                        <CardImg width="100%" src={campsite.image} alt={campsite.name} />
+                        <CardImgOverlay>
+                            <CardTitle>{campsite.name}</CardTitle>
+                        </CardImgOverlay>
+                    </Card>
+                </div>
+            );
+        });
 
         return (
             <div className="container">
                 <div className="row">
                     {directory}
+                </div>
+                <div className="row">
+                    <div className="col-md-5 m-1">
+                        {this.renderSelectedCampsite(this.state.selectedCampsite)}
+                    </div>
                 </div>
             </div>
         );
