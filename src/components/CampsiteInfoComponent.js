@@ -1,23 +1,12 @@
-import React from "react";
-import {
-  Button,
-  Card,
-  CardImg,
-  CardText,
-  CardBody,
-  Breadcrumb,
-  BreadcrumbItem,
-  Label,
-  Modal,
-  ModalHeader,
-  ModalBody,
-} from "reactstrap";
+import React, { Component } from "react";
+import {Card, CardImg, CardText, CardBody, Breadcrumb, BreadcrumbItem, Button, Modal, ModalHeader, ModalBody, Label} from "reactstrap";
 import { Link } from "react-router-dom";
-import { Control, Errors, LocalForm } from "react-redux-form";
-import { Loading } from './LoadingComponent';
+import { Control, LocalForm, Errors } from "react-redux-form";
+import { Loading } from "./LoadingComponent";
 
-const minLength = (val) => val && val.length >= 2;
-const maxLength = (val) => val && val.length <= 15;
+
+const maxLength = (len) => (val) => !val || val.length <= len;
+const minLength = (len) => (val) => val && val.length >= len;
 
 function RenderCampsite({ campsite }) {
   return (
