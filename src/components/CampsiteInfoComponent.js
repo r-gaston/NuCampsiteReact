@@ -16,7 +16,7 @@ function RenderCampsite({ campsite }) {
             <FadeTransform
                 in
                 transformProps={{
-                    exitTransform: 'scale(0.5) translateY(-50%)'
+                    exitTransform: "scale(0.5) translateY(-50%)",
                 }}>
                 <Card>
                     <CardImg top src={baseUrl + campsite.image} alt={campsite.name} />
@@ -29,7 +29,7 @@ function RenderCampsite({ campsite }) {
   );
 }
 
-class CommentForm extends React.Component {
+class CommentForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -39,8 +39,6 @@ class CommentForm extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  
-
   toggleModal() {
     this.setState({
       isModalOpen: !this.state.isModalOpen,
@@ -49,28 +47,31 @@ class CommentForm extends React.Component {
 
   handleSubmit(values) {
     this.toggleModal();
-    this.props.postComment(this.props.campsiteId, values.rating, values.author, values.text);
-}
+    this.props.postComment(
+      this.props.campsiteId,
+      values.rating,
+      values.author,
+      values.text
+    );
+  }
 
   render() {
     return (
       <div>
-        <Button onClick={this.toggleModal} outline>
-          <i className="fa fa-lg fa-pencil" />
-          Submit Comment
+        <Button outline onClick={this.toggleModal}>
+          <i className="fa fa-pencil fa-lg" /> Submit Comment
         </Button>
         <Modal isOpen={this.state.isModalOpen} toggle={this.toggleModal}>
           <ModalHeader toggle={this.toggleModal}>Submit Comment</ModalHeader>
           <ModalBody>
-            <LocalForm onSubmit={this.handleSubmit}>
+            <LocalForm onSubmit={(values) => this.handleSubmit(values)}>
               <div className="form-group">
-                <Label>Rating</Label>
+                <Label htmlFor="rating">Rating</Label>
                 <Control.select
                   model=".rating"
                   id="rating"
                   name="rating"
                   className="form-control"
-                  defaultValue="1"
                 >
                   <option>1</option>
                   <option>2</option>
@@ -80,39 +81,42 @@ class CommentForm extends React.Component {
                 </Control.select>
               </div>
               <div className="form-group">
-                <Label>Your Name</Label>
+                <Label htmlFor="author">Your Name</Label>
                 <Control.text
-                  model=".name"
-                  id="name"
-                  name="name"
+                  model=".author"
+                  id="author"
+                  name="author"
+                  placeholder="Your Name"
                   className="form-control"
                   validators={{
-                    minLength: minLength,
-                    maxLength: maxLength,
+                    minLength: minLength(2),
+                    maxLength: maxLength(15),
                   }}
                 />
                 <Errors
-                  model=".name"
+                  className="text-danger"
+                  model=".author"
                   show="touched"
                   component="div"
-                  className="text-danger"
                   messages={{
-                    minLength: "min length must be 2",
-                    maxLength: "max length must be 15",
+                    minLength: "Must be at least 2 characters",
+                    maxLength: "Must be 15 characters or less",
                   }}
                 />
               </div>
               <div className="form-group">
-                <Label>Comment</Label>
+                <Label htmlFor="text">Comment</Label>
                 <Control.textarea
-                  model=".comment"
-                  id="comment"
-                  name="comment"
-                  className="form-control"
+                  model=".text"
+                  id="text"
+                  name="text"
                   rows="6"
+                  className="form-control"
                 />
               </div>
-              <Button color="primary">Submit</Button>
+              <Button type="submit" color="primary">
+                Submit
+              </Button>
             </LocalForm>
           </ModalBody>
         </Modal>
