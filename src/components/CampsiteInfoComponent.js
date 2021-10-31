@@ -47,12 +47,7 @@ class CommentForm extends Component {
 
   handleSubmit(values) {
     this.toggleModal();
-    this.props.postComment(
-      this.props.campsiteId,
-      values.rating,
-      values.author,
-      values.text
-    );
+    this.props.postComment(this.props.campsiteId, values.rating, values.author, values.text);
   }
 
   render() {
@@ -71,8 +66,7 @@ class CommentForm extends Component {
                   model=".rating"
                   id="rating"
                   name="rating"
-                  className="form-control"
-                >
+                  className="form-control">
                   <option>1</option>
                   <option>2</option>
                   <option>3</option>
@@ -91,8 +85,7 @@ class CommentForm extends Component {
                   validators={{
                     minLength: minLength(2),
                     maxLength: maxLength(15),
-                  }}
-                />
+                  }}/>
                 <Errors
                   className="text-danger"
                   model=".author"
@@ -101,8 +94,7 @@ class CommentForm extends Component {
                   messages={{
                     minLength: "Must be at least 2 characters",
                     maxLength: "Must be 15 characters or less",
-                  }}
-                />
+                  }}/>
               </div>
               <div className="form-group">
                 <Label htmlFor="text">Comment</Label>
@@ -111,8 +103,7 @@ class CommentForm extends Component {
                   id="text"
                   name="text"
                   rows="6"
-                  className="form-control"
-                />
+                  className="form-control"/>
               </div>
               <Button type="submit" color="primary">
                 Submit
